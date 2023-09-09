@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-2">
+      <h2 class="text-3xl font-semibold text-gray-800 mb-4">Featured Novels</h2>
+      <div class="grid grid-cols-3 gap-8">
+        {% for novel in novels %}
+          <div class="group relative">
+            <img src="{{ novel.image.url }}" alt="{{ novel.title }}" class="w-full" name="myImage">
+            <a href="{% url 'novels:novel_details' novel.id %}" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-white text-xl font-semibold">{{ novel.title }}</h3>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <h2 class="text-3xl font-semibold text-gray-800 mb-4">Trending Novels</h2>
+      <ul class="space-y-4">
+        {% for novel in novels %}
+          <li>
+            <a href="{% url 'novels:novel_details' novel.id %}" class="flex items-center">
+              <img src="{{ novel.image.url }}" alt="{{ novel.title }}" class="w-16 h-16 mr-4">
+              <div>
+                <h3 class="text-lg font-semibold">{{ novel.title }}</h3>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

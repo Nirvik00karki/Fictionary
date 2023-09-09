@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'novels/novel_details.css' %}" </head>
+  <div class="grid grid-cols-3 gap-8">
+    <div class="col-span-2">
+      {% for novel in novels %}
+      <div class="flex items-center mb-4">
+        <img src="{{ novel.image.url }}" alt="{{ novel.title }}" class="w-64">
+        <div class="ml-4">
+          <h2 class="text-3xl font-semibold text-gray-800">{{ novel.title }}</h2>
+          <p class="text-gray-600">Author: {{ novel.author }}</p>
+          <p class="text-gray-600">Genre: {{ novel.genre }}</p>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold mb-2">Synopsis</h3>
+        <p class="text-gray-600">{{ novel.synopsis }}</p>
+      </div>
+      {% endfor %}
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold mb-2">Chapters</h3>
+        <hr>
+        {% for chapter in chapters %}
+        <ul class="chapter-list">
+          <form method="POST" action="{% url 'novels:add_to_cart' chapter.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn" style="color:white; background-color: orange; padding:0; float: right;">Add to Cart</button>
+          </form>
+          <li><a href="{% url 'novels:chapter_details' chapter.id %}" data-chapter-id="{{ chapter.id }}">{{ chapter.title}}</a>
+          
+          </li>
+        </ul>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+  </div>
+  {% endblock %}

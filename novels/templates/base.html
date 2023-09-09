@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fictionary</title>
+    <link rel="stylesheet" href="{% static 'novels/hello.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" />
+  </head>
+  <body>
+    <nav class="bg-white shadow">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between py-3">
+          <div class="flex items-center">
+            <a href="/" class="text-2xl font-semibold text-gray-800">Fictionary</a>
+            <ul class="flex ml-8 space-x-4">
+              <!-- <li><a href="#" class="text-gray-600 hover:text-gray-800">Genres</a></li> -->
+              <div class="dropdown">
+                <span>Genre</span>
+                <div class="dropdown-content">
+                  <a href="#">Fantasy</a>
+                  <a href="#">Science Fiction</a>
+                  <a href="#">Romance</a>
+                  <a href="#">Mystery/Thriller</a>
+                  <a href="#">Historical Fiction</a>
+                  <a href="#">Young Adult</a>
+                </div>
+              </div>
+          
+              <li><a href="/chapter_details/{{ chapter.id }}/make_payment/" class="text-gray-600 hover:text-gray-800">Payment</a></li>
+              <li><a href="{% url 'novels:view_cart' %}" class="text-gray-600 hover:text-gray-800">View Cart</a></li>
+              <li> <a href="{% url 'submit_review' %}" class="text-gray-600 hover:text-gray-800">Go to Review Form</a></li>
+            </ul>
+          </div>
+          <div class="flex items-center">
+            <a href="/login/" class="text-gray-600 hover:text-gray-800 mr-4">Login</a>
+            <a href="/register/" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors duration-300">Sign Up</a>
+          </div>
+          <div>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="container mx-auto my-8 px-4">
+      {% block content %}{% endblock %}
+    </section>
+
+    <footer class="bg-gray-800 text-gray-100">
+      <div class="container mx-auto py-8 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3">
+          <div class="text-center md:text-left">
+            <h5 class="uppercase mb-2 font-semibold">Fictionary</h5>
+            <p class="text-gray-400">A community for writers and readers, where fans can discover new talent and connect with one another.</p>
+          </div>
+          <div class="text-center md:text-left mt-8 md:mt-0">
+              <li class="mt-2">
+                <a href="#" class="hover:underline">About Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr class="border-gray-700 my-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="flex mt-4 md:mt-0">
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static 'novels/hello.js' %}"></script>
+  </body>
+</html>

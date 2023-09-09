@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <head>
+    <link rel="stylesheet" href="{% static 'novels/chapter_details.css' %}">
+  </head>
+  <div id="content">
+    <aside class="toc-container">
+      <div class="toc-title">Table of Contents</div>
+      <div class="toc-dropdown">
+        <button class="toc-dropdown-btn">Chapters <i class="fas fa-caret-down"></i></button>
+        <div class="toc-dropdown-content">
+          <ul class="chapter-list">
+            {% for chapter in chapters %}
+              <li><a href="{% url 'novels:chapter_details' chapter.id %}" data-chapter-id="{{ chapter.id }}">{{ chapter.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <div class="chapter-content">
+        <h2>{{ chapter.title }}</h2>
+        <div>
+          {{ chapter.content|linebreaksbr }}
+        </div>
+      </div>
+      <div class="toolbar">
+      {% if chapter.previous_chapter %}
+        <a href="{% url 'novels:chapter_details' chapter.previous_chapter.id %}" class="toolbar-btn">Previous</a>
+      {% endif %}
+      {% if chapter.next_chapter %}
+        {% if user.is_authenticated %}
+          {% if next_chapter and user_has_payment %}
+            <a href="{% url 'novels:chapter_details' chapter.next_chapter.id %}" class="toolbar-btn">Next</a>
+          {% else %}
+            <a href="{% url 'novels:make_payment' chapter.next_chapter.id %}" class="toolbar-btn">Read Next Chapter (Payment Required)</a>
+          {% endif %}
+        {% else %}
+          <a href="/login/" class="toolbar-btn">Login to Read Next Chapter</a>
+        {% endif %}
+      {% endif %}      
+      </div>
+      <div class="toolbar-icons">
+        <a href="#" id="bookmark-icon"><i class="fas fa-bookmark"></i></a>
+        <a href="#" id="settings-icon"><i class="fas fa-cog"></i></a>
+        <a href="#" id="day-night-icon"><i class="fas fa-sun"></i></a>
+      </div>
+    </main>
+  </div>
+{% endblock %}
